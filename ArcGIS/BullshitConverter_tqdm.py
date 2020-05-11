@@ -92,7 +92,12 @@ def EToASC():
     dirs = os.listdir(locations)
     for file in tqdm(dirs):
         in_point_features=file.rstrip('.csv')
-        out =  Kriging (in_point_features, z_field, KrigingModelOrdinary(),cell_size)
+        # out =  Kriging (in_point_features, z_field, KrigingModelOrdinary(),cell_size)
+        try:
+            out =  Kriging (in_point_features, z_field, KrigingModelOrdinary(),cell_size)
+        except Exception as e:
+            out = Idw (in_point_features, z_field, cell_size)
+            pass
         outname="E:/Project/EToMID/"+"Re_"+file.rstrip('.csv')+".tif"
         out.save(outname)
         exportname="E:/Project/EToMID/CLIPPED/Clipped_"+file.rstrip('.csv')+".tif"
@@ -163,21 +168,26 @@ def PREASC():
 
     dirs = os.listdir(locations)
     for file in tqdm(dirs):
-        flag=False
-        x=0
+        # flag=False
+        # x=0
         in_point_features=file.rstrip('.csv')
-        with open((locations+file),'r')as f:
-            reader=csv.DictReader(f)
-            column=[row['PRE'] for row in reader]
-            if (len(set(column))==1):
-                flag = False
-            else:
-                flag = True
+        # with open((locations+file),'r')as f:
+        #     reader=csv.DictReader(f)
+        #     column=[row['PRE'] for row in reader]
+        #     if (len(set(column))==1):
+        #         flag = False
+        #     else:
+        #         flag = True
 
-        if(flag):
+        # if(flag):
+        #     out =  Kriging (in_point_features, z_field, KrigingModelOrdinary(),cell_size)
+        # else:
+        #     out = Idw (in_point_features, z_field, cell_size)
+        try:
             out =  Kriging (in_point_features, z_field, KrigingModelOrdinary(),cell_size)
-        else:
+        except Exception as e:
             out = Idw (in_point_features, z_field, cell_size)
+            pass
         outname="E:/Project/PREMID/"+"Re_"+file.rstrip('.csv')+".tif"
         out.save(outname)
         exportname="E:/Project/PREMID/CLIPPED/Clipped_"+file.rstrip('.csv')+".tif"

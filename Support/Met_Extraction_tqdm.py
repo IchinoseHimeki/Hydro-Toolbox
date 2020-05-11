@@ -10,6 +10,8 @@ Dir45='E:/Project/CMIP5/FILE/45/'
 Out45='E:/Project/CMIP5/FILE/45CSV/'
 Dir85='E:/Project/CMIP5/FILE/85/'
 Out85='E:/Project/CMIP5/FILE/85CSV/'
+startTime = '1919'
+endTime = '2050'
 
 def create_csv(Location,Kind,Date):
     path = Location+Kind+Date+'.csv'
@@ -27,14 +29,12 @@ def write_csv(Location,Kind,Date,Data):
 
 ## 获取站点坐标，复制粘贴即可
 def getLocation(name):
-    if(name == "50727"):
-        return "119.56","47.1"
-    elif(name == "50834"):
-        return "121.13","46.36"
-    elif(name == "50838"):
-        return "122.05","46.08"
-    elif(name == "50936"):
-        return "122.5","45.38"
+    if(name == "11451"):
+        return "22.33","44.55"
+    elif(name == "51419"):
+        return "125.25","66.66"
+    elif(name == "19810"):
+        return "119.1","81.0"
 
 def read_met45():
     Out45PRE=Out45+"PRE/"
@@ -49,7 +49,7 @@ def read_met45():
             for l in tqdm(line):
                 newLine=re.split(r'(?:\s)\s*', l)
                 ##选定时间段
-                if((newLine[0]>='2020')&(newLine[0]<='2050')):
+                if((newLine[0] >= startTime) & (newLine[0] <= endTime)):
                     Date=newLine[0]+newLine[1]
                     DataPRE=[name,location[0],location[1],newLine[5]]
                     DataETo=[name,location[0],location[1],newLine[6]]
@@ -73,7 +73,7 @@ def read_met85():
             for l in tqdm(line):
                 newLine=re.split(r'(?:\s)\s*', l)
                 ##选定时间段
-                if((newLine[0]>='2020')&(newLine[0]<='2050')):
+                if((newLine[0]>='1919')&(newLine[0]<='2050')):
                     Date=newLine[0]+newLine[1]
                     DataPRE=[name,location[0],location[1],newLine[5]]
                     DataETo=[name,location[0],location[1],newLine[6]]
