@@ -23,11 +23,10 @@ Python 3.8.3(64 bit)
 [`Spilt.py`](Support/Split.py)(将总数据的CSV裁切为以日为文件的CSV).   
 [`Met_Extraction.py`](Support/Met_Extraction.py)(提取.met中的数据并输出为CSV).  
 [`BullshitConverter.py`](ArcGIS/BullshitConverter.py/)(将CSV文件转换为散点，再进行插值，裁剪，重采样).  
-(如有需要会进行补充，没有需要就不会补充了)
-[`BullshitConverterRelease.py`](ArcGIS/BullshitConverterRelease.py)(为了完成软件著作权及提高实用性开发的功能较为齐全的版本)。  
-[`Extract.py`](Support/Extract.py)(将SLiM模型输出结果拆分为以站点为单位的文件以便于Excel分析)  
-[`Check.py`](Support/Check.py)(验证两个ASCII文件所含区域是否一致，如不一样则输出结果以备查验，最终尝试填补，生成填补文件)  
-[`to0.py`](Support/to0.py)(将Kriging法插值插出的负值修正为0)  
+[`BullshitConverterRelease.py`](ArcGIS/BullshitConverterRelease.py)(为了完成软件著作权及提高实用性开发的功能较为齐全的版本).   
+[`Extract.py`](Support/Extract.py)(将SLiM模型输出结果拆分为以站点为单位的文件以便于Excel分析).  
+[`Check.py`](Support/Check.py)(验证两个ASCII文件所含区域是否一致，如不一样则输出结果以备查验，最终尝试填补，生成填补文件).   
+[`to0.py`](Support/to0.py)(将Kriging法插值插出的负值修正为0).    
   
 ## 文件格式说明
 [ArcGIS](ArcGIS/)文件夹为需要[Esri ArcGIS arcpy](https://www.esri.com/arcgis-blog/products/arcgis-desktop/uncategorized/whats-new-in-arcmap-10-6/)作为前置.  
