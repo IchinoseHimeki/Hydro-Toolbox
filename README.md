@@ -24,7 +24,7 @@ Python 3.8.3(64 bit)
 [`Met_Extraction.py`](Support/Met_Extraction.py)(提取.met中的数据并输出为CSV).  
 [`BullshitConverter.py`](ArcGIS/BullshitConverter.py/)(将CSV文件转换为散点，再进行插值，裁剪，重采样).  
 (如有需要会进行补充，没有需要就不会补充了)
-[`BullshitConverterRelease.py`](ArcGIS/BullshitConverterRelease.py)(为了完成软件著作权及提高实用性开发的功能较为齐全的版本,将会单独写一个文档以便于使用)。
+[`BullshitConverterRelease.py`](ArcGIS/BullshitConverterRelease.py)(为了完成软件著作权及提高实用性开发的功能较为齐全的版本)。  
 [`Extract.py`](Support/Extract.py)(将SLiM模型输出结果拆分为以站点为单位的文件以便于Excel分析)  
 [`Check.py`](Support/Check.py)(验证两个ASCII文件所含区域是否一致，如不一样则输出结果以备查验，最终尝试填补，生成填补文件)  
 [`to0.py`](Support/to0.py)(将Kriging法插值插出的负值修正为0)  
@@ -36,10 +36,11 @@ Python 3.8.3(64 bit)
 带`_Test`的文件夹为样例文件,数据已经改成无关数据,**除表示格式外无任何意义**.  
 
 ## TODO
-1. √ 重写`BullshitConverter.py`使其支持多线程操作(一次处理上万个文件就已经暴露性能不足的问题),~~预计采用Hadoop解决~~ ;
-2. 模型敏感性分析（估计要花上一年时间）;
-3. 收集使用反馈和PR(梦里)；
-4. 待续(咕咕咕)
+1. √ 重写`BullshitConverter.py`使其支持多线程操作(一次处理上万个文件就已经暴露性能不足的问题),~~预计采用Hadoop解决~~;
+2. 为`BullshitConverterRelease.py`写一个用户有好的文档;
+3. 模型敏感性分析(估计要花上一年时间);
+4. 收集使用反馈和PR(梦里);
+5. 待续(咕咕咕)
 
 ##  一些没用的碎碎念
 1.  克里金(Kriging)法无法处理相同的数据列, 只能通过IDW等其他插值方法;  
