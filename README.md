@@ -28,7 +28,7 @@ Python 3.8.3(64 bit)
 [`Extract.py`](Support/Extract.py)(将SLiM模型输出结果拆分为以站点为单位的文件以便于Excel分析).  
 [`Check.py`](Support/Check.py)(验证两个ASCII文件所含区域是否一致，如不一样则输出结果以备查验，最终尝试填补，生成填补文件).   
 [`to0.py`](Support/to0.py)(将Kriging法插值插出的负值修正为0).      
-[`raster_mean_calculation`](Support/raster_mean_calculation.py)(计算栅格平均值并输出至csv文件中).   
+[`Raster_Mean_Calculation`](Support/Raster_Mean_Calculation.py)(计算栅格平均值并输出至csv文件中).   
 ## 文件格式说明
 [ArcGIS](ArcGIS/)文件夹为需要[Esri ArcGIS arcpy](https://www.esri.com/arcgis-blog/products/arcgis-desktop/uncategorized/whats-new-in-arcmap-10-6/)作为前置.  
 [Support](Support/)文件夹为支持类型的文件,具体需求会写在注释中.  
