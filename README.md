@@ -29,7 +29,8 @@ Python 3.8.3(64 bit)
 [`Check.py`](Support/Check.py)(验证两个ASCII文件所含区域是否一致，如不一样则输出结果以备查验，最终尝试填补，生成填补文件).   
 [`to0.py`](Support/to0.py)(将Kriging法插值插出的负值修正为0).      
 [`Raster_Mean_Calculation.py`](ArcGIS/Raster_Mean_Calculation.py)(计算栅格平均值并输出至csv文件中).
-[`Raster_Mean_Calculation_with_Extraction.py`](ArcGIS/Raster_Mean_Calculation_with_Extraction.py)(计算根据指定区域裁剪完毕后输出的栅格平均值并输出至csv文件中).     
+[`Raster_Mean_Calculation_with_Extraction.py`](ArcGIS/Raster_Mean_Calculation_with_Extraction.py)(计算根据指定区域裁剪完毕后输出的栅格平均值并输出至csv文件中).  
+[`Raster_Calculator.py`](ArcGIS/Raster_Calculator.py)(调用栅格计算器进行一特定表达式计算).       
 ## 文件格式说明
 [ArcGIS](ArcGIS/)文件夹为需要[Esri ArcGIS arcpy](https://www.esri.com/arcgis-blog/products/arcgis-desktop/uncategorized/whats-new-in-arcmap-10-6/)作为前置.  
 [Support](Support/)文件夹为支持类型的文件,具体需求会写在注释中.  
@@ -49,5 +50,9 @@ Python 3.8.3(64 bit)
 3.  `BullshitConverter.py`里存在一个泰森多边形计算雨量的方法,但由于流域空间上的非均质性,无法用泰森多边形的雨量作为输入，在`BullshitConveterRelease.py`中删除了这个算法，请自行迁移;  
 4.  建议处理流程一致，避免坐标变换，重采样等带来的坐标偏移问题;
 5.  需要首先进行计算栅格统计参数后方可求栅格最大值，最小值等；
-6.  ~~模型调节~~考研上岸漫漫无期...;
-7.  待续...  
+6.  栅格计算器(`RasterCalculator`)调用并不在`arcpy.sa`包中，需要在`arcpy.gp.RasterCalculator_sa`中引用；
+7.  ArcGIS Python UI不支持多进程操作，大大拖慢了程序效率；
+8.  在传递参数计算时采用了将数组置于方法内计算的方法将二维数组压缩为一维数组；
+9.  多线程操作将尽可能采用根据CPU逻辑处理器数指定的线程池实现;
+10. ~~模型调节~~考研上岸漫漫无期...;
+11. 待续...  
