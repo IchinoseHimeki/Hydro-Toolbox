@@ -20,7 +20,7 @@ Python Scripts and other Things for simplify graduation work.
 
 ## 本人平台
 ```
-Win10 2004
+Win10 21h1
 //ArcGIS 10.6 with python 2.7.14(64 bit)
 ArcGIS 10.8 with python 2.7.16(32 bit)
 ArcGIS Pro with python 3.3
@@ -41,6 +41,7 @@ Python 3.8.3(64 bit)
 [`ESA_Calculation`](ArcGIS/ESA_Calculation.py)(受CSDN大佬启发，结合Raster_Mean_Calculation_with_Extraction编写的批处理欧航局雪量数据程序).  
 [`Extract_Interpolation`](ArcGIS/Extract_Interpolation.py)(为解决低分辨率数据造成的误差问题，将较低分辨率的数据提取至点，再进行插值裁切，间接提升分辨率).  
 [`PointsGen.py`](ArcGIS/PointsGen.py)(为[`Extract_Interpolation`](ArcGIS/Extract_Interpolation.py)生成所需提取值-插值点).  
+[`CMA_Extract.py`](Support/CMA_Exract.py)(针对中国国家气象科学数据中心的[中国地面气候资料日值数据集](http://data.cma.cn/data/cdcdetail/dataCode/SURF_CLI_CHN_MUL_DAY.html)提取指定要素，使之符合[SWAT Weather Generator](https://www.researchgate.net/publication/294535100_SWAT_Weather_Database)的数据输入要求).  
 ## 文件格式说明
 [ArcGIS](ArcGIS/)文件夹为需要[Esri ArcGIS arcpy](https://www.esri.com/arcgis-blog/products/arcgis-desktop/uncategorized/whats-new-in-arcmap-10-6/)作为前置.  
 [Support](Support/)文件夹为支持类型的文件,具体需求会写在注释中.  
@@ -67,5 +68,6 @@ Python 3.8.3(64 bit)
 10. [GLUE(Generalised likelihood uncertainty estimation)](https://en.wikipedia.org/wiki/Generalised_likelihood_uncertainty_estimation)是一种水文模型不确定性分析的方法，由于wiki介绍过少，本人大体理解过程分为几个步骤：生成一系列参数组，并采用指定方法采样，将其作为模型输入；构造似然函数，求解出结果，验证估计值是否在置信区间内；统计符合要求的参数，观察分布特征；
 11. 如根据掩膜提取等需要返回栅格的ArcGIS操作，并发多进程极易引发冲突。其原因为ArcGIS先在同一目录下处理缓存文件，后根据是否调用save方法决定是否转存或直接删除，其命名格式较为单一，因此在多进程并发操作中，极易引发文件冲突而导致进程阻塞或提前终止。在代码中，采用分别建立子文件夹并在每一次操作时单独指定工作空间可有效避免这一问题;
 12. Python多进程操作map函数，传递参数仅为一个。如有需要请考虑封装成一个参数进行执行。其函数返回值可通过get方法获取以List为单位的数据;
-13. ~~模型调节~~考研上岸~~漫漫无期~~50%...;
-14. 待续...  
+13. Python的`Extend`和`Append`在处理多维数组时存在一定区别，如想追加到已有记录尾部，请考虑使用`Append`方法;  
+14. 屌我唔想返工啊！  
+15. 待续...  
