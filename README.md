@@ -1,4 +1,4 @@
-# Pys-for-ArcGIS
+# Hydro-Toolbox
 
 [^_^]: # (For the girl who I missed and still miss now.)
 [^_^]: # (Glad to see everything get well on you. Please carry it on, and be yourself.)
@@ -6,7 +6,7 @@
 [^_^]: # (Sadly but luckily end it before the gaps get beyond accross.)
 [^_^]: # (All best wishes to you, HZC.)
 
-Python Scripts and other Things for simplify graduation work.  
+Scripts and other Things for simplify graduation work, python takes the most part.  
 为了简化项目工作而写的一些脚本，部分内容感谢 [@Null233](https://github.com/Null233) 的帮助  
 
 **代码仅仅处于能用的状态,内部充斥着大量可改进部分,欢迎大佬补充,指正. 也欢迎大家fork, pull request或者发issue.**
@@ -25,6 +25,7 @@ Win10 21h1
 ArcGIS 10.8 with python 2.7.16(32 bit)
 ArcGIS Pro with python 3.3
 Python 3.8.3(64 bit)
+R 4.1.0(64 bit)
 ```
 ## 目前文件
 [`Spilt.py`](Support/Split.py)(将总数据的CSV裁切为以日为文件的CSV).   
@@ -42,6 +43,7 @@ Python 3.8.3(64 bit)
 [`Extract_Interpolation`](ArcGIS/Extract_Interpolation.py)(为解决低分辨率数据造成的误差问题，将较低分辨率的数据提取至点，再进行插值裁切，间接提升分辨率).  
 [`PointsGen.py`](ArcGIS/PointsGen.py)(为[`Extract_Interpolation`](ArcGIS/Extract_Interpolation.py)生成所需提取值-插值点).  
 [`CMA_Extract.py`](Support/CMA_Exract.py)(针对中国国家气象科学数据中心的[中国地面气候资料日值数据集](http://data.cma.cn/data/cdcdetail/dataCode/SURF_CLI_CHN_MUL_DAY.html)提取指定要素，使之符合[SWAT Weather Generator](https://www.researchgate.net/publication/294535100_SWAT_Weather_Database)的数据输入要求).  
+[`Another_CMA_Extract_R.r`](Support/Another_CMA_Extract_R.r)(为另外一种格式的中国国家气象科学数据中心的地面资料日值数据集，应师姐所需，采用R语言进行编写).
 ## 文件格式说明
 [ArcGIS](ArcGIS/)文件夹为需要[Esri ArcGIS arcpy](https://www.esri.com/arcgis-blog/products/arcgis-desktop/uncategorized/whats-new-in-arcmap-10-6/)作为前置.  
 [Support](Support/)文件夹为支持类型的文件,具体需求会写在注释中.  
@@ -69,5 +71,6 @@ Python 3.8.3(64 bit)
 11. 如根据掩膜提取等需要返回栅格的ArcGIS操作，并发多进程极易引发冲突。其原因为ArcGIS先在同一目录下处理缓存文件，后根据是否调用save方法决定是否转存或直接删除，其命名格式较为单一，因此在多进程并发操作中，极易引发文件冲突而导致进程阻塞或提前终止。在代码中，采用分别建立子文件夹并在每一次操作时单独指定工作空间可有效避免这一问题;
 12. Python多进程操作map函数，传递参数仅为一个。如有需要请考虑封装成一个参数进行执行。其函数返回值可通过get方法获取以List为单位的数据;
 13. Python的`Extend`和`Append`在处理多维数组时存在一定区别，如想追加到已有记录尾部，请考虑使用`Append`方法;  
-14. 屌我唔想返工啊！  
-15. 待续...  
+14. R语言和pandas有点意思嗷;
+15. 屌我唔想返工啊！  
+16. 待续...  
