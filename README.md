@@ -35,15 +35,19 @@ R 4.1.0(64 bit)
 [`Extract.py`](Support/Extract.py)(将SLiM模型输出结果拆分为以站点为单位的文件以便于Excel分析).  
 [`Check.py`](Support/Check.py)(验证两个ASCII文件所含区域是否一致，如不一样则输出结果以备查验，最终尝试填补，生成填补文件).   
 [`to0.py`](Support/to0.py)(将Kriging法插值插出的负值修正为0).      
-[`Raster_Mean_Calculation.py`](ArcGIS/Raster_Mean_Calculation.py)(计算栅格平均值并输出至csv文件中).
-[`Raster_Mean_Calculation_with_Extraction.py`](ArcGIS/Raster_Mean_Calculation_with_Extraction.py)(计算根据指定区域裁剪完毕后输出的栅格平均值并输出至csv文件中).  
+~~[`Raster_Mean_Calculation.py`](ArcGIS/Raster_Mean_Calculation.py)(计算栅格平均值并输出至csv文件中)~~.  
+~~[`Raster_Mean_Calculation_with_Extraction.py`](ArcGIS/Raster_Mean_Calculation_with_Extraction.py)(计算根据指定区域裁剪完毕后输出的栅格平均值并输出至csv文件中).~~    
 [`Raster_Calculator.py`](ArcGIS/Raster_Calculator.py)(调用栅格计算器进行一特定表达式计算).       
 [`GLUE.py`](Support/GLUE.py)(采用似然函数法验证待选模型参数合理性，进而得出指定参数范围).  
 [`ESA_Calculation`](ArcGIS/ESA_Calculation.py)(受CSDN大佬启发，结合Raster_Mean_Calculation_with_Extraction编写的批处理欧航局雪量数据程序).  
 [`Extract_Interpolation`](ArcGIS/Extract_Interpolation.py)(为解决低分辨率数据造成的误差问题，将较低分辨率的数据提取至点，再进行插值裁切，间接提升分辨率).  
 [`PointsGen.py`](ArcGIS/PointsGen.py)(为[`Extract_Interpolation`](ArcGIS/Extract_Interpolation.py)生成所需提取值-插值点).  
 [`CMA_Extract.py`](Support/CMA_Exract.py)(针对中国国家气象科学数据中心的[中国地面气候资料日值数据集](http://data.cma.cn/data/cdcdetail/dataCode/SURF_CLI_CHN_MUL_DAY.html)提取指定要素，使之符合[SWAT Weather Generator](https://www.researchgate.net/publication/294535100_SWAT_Weather_Database)的数据输入要求).  
-[`Another_CMA_Extract_R.r`](Support/Another_CMA_Extract_R.r)(为另外一种格式的中国国家气象科学数据中心的地面资料日值数据集，应师姐所需，采用R语言进行编写).
+[`Another_CMA_Extract_R.r`](Support/Another_CMA_Extract_R.r)(为另外一种格式的中国国家气象科学数据中心的地面资料日值数据集，应师姐所需，采用R语言进行编写).   
+[`Extract_Mean_Calc.py`](ArcGIS/Extract_Mean_Calc.py)(丢弃了上述划线脚本，重写了该脚本，其可将TXT的asc文件转为tif，按掩膜提取并计算提取后均值，并支持提取值至指定点).  
+[`ClipH5.py`](Support/ClipH5.py)(提取指定H5文件的横纵坐标格,合并成为一行到csv).  
+[`Pipe_Leak.py`](Support/Pipe_Leak.py)(按照指定坐标点，分割实测值数据，求解指定点组的方程并求出所有潜在交点，最终绘制到图上).  
+[`Pipe_Pressure.py`](Support/Pipe_Pressure.py)(为阐明管道漏点位置-漏点大小对水流影响的软件，现已废弃，有结果文件作为参考).  
 ## 文件格式说明
 [ArcGIS](ArcGIS/)文件夹为需要[Esri ArcGIS arcpy](https://www.esri.com/arcgis-blog/products/arcgis-desktop/uncategorized/whats-new-in-arcmap-10-6/)作为前置.  
 [Support](Support/)文件夹为支持类型的文件,具体需求会写在注释中.  
@@ -69,8 +73,9 @@ R 4.1.0(64 bit)
 9.  多线程操作将尽可能采用根据CPU逻辑处理器数指定的线程池实现;
 10. [GLUE(Generalised likelihood uncertainty estimation)](https://en.wikipedia.org/wiki/Generalised_likelihood_uncertainty_estimation)是一种水文模型不确定性分析的方法，由于wiki介绍过少，本人大体理解过程分为几个步骤：生成一系列参数组，并采用指定方法采样，将其作为模型输入；构造似然函数，求解出结果，验证估计值是否在置信区间内；统计符合要求的参数，观察分布特征；
 11. 如根据掩膜提取等需要返回栅格的ArcGIS操作，并发多进程极易引发冲突。其原因为ArcGIS先在同一目录下处理缓存文件，后根据是否调用save方法决定是否转存或直接删除，其命名格式较为单一，因此在多进程并发操作中，极易引发文件冲突而导致进程阻塞或提前终止。在代码中，采用分别建立子文件夹并在每一次操作时单独指定工作空间可有效避免这一问题;
-12. Python多进程操作map函数，传递参数仅为一个。如有需要请考虑封装成一个参数进行执行。其函数返回值可通过get方法获取以List为单位的数据;
-13. Python的`Extend`和`Append`在处理多维数组时存在一定区别，如想追加到已有记录尾部，请考虑使用`Append`方法;  
-14. R语言和pandas有点意思嗷;
-15. 屌我唔想返工啊！  
-16. 待续...  
+12. ArcGIS 10.2 涉及到sa包的时候，需要加入代码`arcpy.CheckOutExtension("spatial")`防止出现错误；
+13. Python多进程操作map函数，传递参数仅为一个。如有需要请考虑封装成一个参数进行执行。其函数返回值可通过get方法获取以List为单位的数据;
+14. Python的`Extend`和`Append`在处理多维数组时存在一定区别，如想追加到已有记录尾部，请考虑使用`Append`方法;  
+15. R语言和pandas有点意思嗷;
+16. 屌我唔想返工啊！  
+17. 待续...  
