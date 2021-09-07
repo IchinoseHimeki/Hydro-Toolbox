@@ -3,7 +3,7 @@
 @Author: Darwin Lee (darwinlee19980811@hotmail.com) 
 @Date: 2021-08-06 14:06:52 
 @Last Modified by:   Darwin Lee (darwinlee19980811@hotmail.com) 
-@Last Modified time: 2021-08-06 14:06:52 
+@Last Modified time: 2021-09-07 19:47:00
 
 Please be advised that ArcGIS is required! 
 This Program could convert txt(asc based) into tif, then extract it by mask, calcualting the mean of the clipped raster. Also, it could extract values into given points.
@@ -59,7 +59,7 @@ def check():
 def asciiToRaster(file):
     filePath=globalPath+"\\Data\\"+file
     outRaster=globalPath+"\\Rasters\\"+str(file).rstrip(".txt")+".tif"
-    arcpy.ASCIIToRaster_conversion(filePath, outRaster, "float")
+    arcpy.ASCIIToRaster_conversion(filePath, outRaster, "FLOAT")
 
 def extractByMask_meanCalc(file):
     os.mkdir(globalPath+"\\Middle\\TEMP\\"+str(file).rstrip(".txt"))
