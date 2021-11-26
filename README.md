@@ -48,10 +48,14 @@ R 4.1.0(64 bit)
 [`ClipH5.py`](Support/ClipH5.py)(提取指定H5文件的横纵坐标格,合并成为一行到csv).  
 [`Pipe_Leak.py`](Support/Pipe_Leak.py)(按照指定坐标点，分割实测值数据，求解指定点组的方程并求出所有潜在交点，最终绘制到图上).  
 [`Pipe_Pressure.py`](Support/Pipe_Pressure.py)(为阐明管道漏点位置-漏点大小对水流影响的软件，现已废弃，有结果文件作为参考).  
-[`FixHeader.py`](Support/FixHeader.py)(为缺失文件头的.asc/txt文件添加文件头).  
+[`FixHeader.py`](Support/FixHeader.py)(为缺失文件头的.asc/txt文件添加文件头). 
+[`Pipe_Parameter_Gen.py`](Flomaster/Pipe_Parameter_Gen.py)(根据Flomaster生成的参数文件来批量生成参数文件).   
+[`Extract_Pipe_Xlsx.py`](Flomaster/Extract_Pipe_Xlsx.py)(提取FloMaster生成的xlsx文件使用的程序).  
+[`PRE_Extract.py`](Support/PRE_Extract.py)(将指定仪器自记录的累计降雨尽可能拆分成指定时长内的降雨).  
 ## 文件格式说明
 [ArcGIS](ArcGIS/)文件夹为需要[Esri ArcGIS arcpy](https://www.esri.com/arcgis-blog/products/arcgis-desktop/uncategorized/whats-new-in-arcmap-10-6/)作为前置.  
 [Support](Support/)文件夹为支持类型的文件,具体需求会写在注释中.  
+[Flomaster](Flomaster/)文件夹为支持[Simcenter Flomaster](https://www.plm.automation.siemens.com/global/en/products/simcenter/flomaster.html)所写的脚本，基本无其他地方可用.  
 带`_tqdm`的文件为支持[tqdm](https://github.com/tqdm/tqdm)进度条,请检查是否安装.  
 带`_Test`的文件夹为样例文件,数据已经改成无关数据,**除表示格式外无任何意义**.  
 
