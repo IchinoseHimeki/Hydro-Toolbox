@@ -1,10 +1,22 @@
+'''
+File: Extract.py
+File Created: 2020-05-30 15:42:33
+Author: IchinoseHimeki (darwinlee19980811@hotmail.com)
+-----
+Last Modified: 2022-01-21 15:13:41
+Modified By: IchinoseHimeki (darwinlee19980811@hotmail.com>)
+-----
+Copyright 2022
+Requisite: Python 3.10+
+Description: This will help while extracting data from a file to station-sperated csvs. Just to make it easier while tweaking models.
+Sorry due to copyrights of the model, I will NEVER provide ANY details of this model, only a soultion for problems while dealing.
+This contains some good ways, it will be applied into other files while possible
+'''
+
 import csv
 import os
 import time
 from datetime import datetime as dt
-# This will help while extracting data from a file to station-sperated csvs. Just to make it easier while tweaking models.
-# Sorry due to copyrights of the model, I will NEVER provide ANY details of this model, only a soultion for problems while dealing.
-# This contains some good ways, it will be applied into other files while possible.
 
 Location = os.getcwd()
 def readResult():

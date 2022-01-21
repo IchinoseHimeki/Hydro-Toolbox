@@ -1,8 +1,17 @@
-# -*- coding=utf-8 -*-
+# -*- coding=utf-8 -*-、
 '''
-Please be advised that h5py is REQUIRED!
-This program output some h5 data into one csv.
+File: ClipH5.py
+File Created: 2021-08-26 14:59:33
+Author: IchinoseHimeki (darwinlee19980811@hotmail.com)
+-----
+Last Modified: 2022-01-21 14:35:42
+Modified By: IchinoseHimeki (darwinlee19980811@hotmail.com>)
+-----
+Copyright 2022
+Requisite: h5py
+Description: This program output some h5 data into one csv.
 '''
+
 import os
 import shutil
 from multiprocessing import Pool

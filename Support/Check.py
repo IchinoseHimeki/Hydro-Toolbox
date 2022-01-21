@@ -1,12 +1,25 @@
+'''
+File: Check.py
+File Created: 2020-05-30 17:42:33
+Author: IchinoseHimeki (darwinlee19980811@hotmail.com)
+-----
+Last Modified: 2022-01-21 14:33:51
+Modified By: IchinoseHimeki (darwinlee19980811@hotmail.com>)
+-----
+Copyright 2022
+Requisite: Python 3.10+
+Description: This is to check that if 2 .asc files covers exactly the same area.
+REMOVE THE HEADERS OF BOTH FILES FIRST!
+I have supposed that you have got two same size(cols and rows), if you cannot do that, it will help by below steps.
+1. Remove last lines till they are same
+2. Uncomment the code as below
+Since I had all files(res.txt & res.asc) in APPEND mode, please clear them if necessary.
+Do not forget to add HEADERS back while using res.asc
+'''
+
 import os
 import array
-# This is to check that if 2 .asc files covers exactly the same area.
-# REMOVE THE HEADERS OF BOTH FILES FIRST!
-# I have supposed that you have got two same size(cols and rows), if you cannot do that, it will help by below steps.
-# 1. Remove last lines till they are same
-# 2. Uncomment the code as below
-# Since I had all files(res.txt & res.asc) in APPEND mode, please clear them if necessary.
-# Do not forget to add HEADERS back while using res.asc
+
 def readASC(FileName):
     data=[]
     with open(FileName,'r+') as f:

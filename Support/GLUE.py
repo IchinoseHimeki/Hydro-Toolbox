@@ -1,18 +1,15 @@
-'''
-@Author: Darwin Lee (darwinlee19980811@hotmail.com) 
-@Date: 2021-01-05 14:10:35 
-@Last Modified by:   Darwin Lee (darwinlee19980811@hotmail.com) 
-@Last Modified time: 2021-01-05 14:10:35 
-'''
 # -*- coding=utf-8 -*-
-import csv
-import os
-import shutil
-from multiprocessing import Pool
-import re
-
 '''
-GLUE is a way used in hydrology for quantifying the uncertainty of model predictions. 
+File: GLUE.py
+File Created: 2021-01-05 14:10:35
+Author: IchinoseHimeki (darwinlee19980811@hotmail.com)
+-----
+Last Modified: 2022-01-21 14:53:18
+Modified By: IchinoseHimeki (darwinlee19980811@hotmail.com>)
+-----
+Copyright 2022
+Requisite: Python 3.10+
+Description: GLUE is a way used in hydrology for quantifying the uncertainty of model predictions. 
 Requirements:
 -Model
 --Extract.py(which could be found in this repo.)
@@ -21,6 +18,13 @@ Requirements:
 -GLUE.py
 GLUE.py will make Model dir copies according to the Controls dir's configs, then copy the config to the destination. Then, GLUE.py will call cmd commands to execute the model and the Extract.py to Extract results. Finally, GLUE.py will calculate the Likelihood function results, chosse the config which meets the conditions, then out put into the Results.csv, including config names and Likelihood function results, cleaning all instances.
 '''
+
+import csv
+import os
+import shutil
+from multiprocessing import Pool
+import re
+
 path=os.getcwd()
 def buildInstance(): # Copy Instances.
     global path
@@ -58,11 +62,11 @@ def readResults(instance,raw): #Read Real results and Model Results into Lists.
     else:
         instancePath=instance+"\\Result\\p12.csv"
     with open(instancePath,'r') as csvfile:
-	    reader = csv.reader(csvfile)
-            head =next(reader)
-	    data = []
-	    for line in reader:
-		    data.append(line)
+        reader = csv.reader(csvfile)
+        head =next(reader)
+        data = []
+        for line in reader:
+            data.append(line)
     return data
 
 

@@ -1,8 +1,20 @@
-# A Script to Extract data download from https://data.cma.cn to SWAT weather generator input csvs.
-# A further database generator for SWAT is https://www.researchgate.net/publication/294535100_SWAT_Weather_Database, where these csvs could be able to use. Again, thanks for his efforts.
-# If using SWAT+, SWAT+ do convert SWAT weather data into SWAT+ format. Cheers!
-# Data URL is http://data.cma.cn/data/cdcdetail/dataCode/SURF_CLI_CHN_MUL_DAY.html.
-# Normally it includes serveral essentinal parameters, average windspeed, average relative humidity, sunshine hours, 24hrs precipitation, maximum temperature and minimum temperature. And it could print specific csvs.
+'''
+File: CMA_Extract.py
+File Created: 2021-05-19 14:03:33
+Author: IchinoseHimeki (darwinlee19980811@hotmail.com)
+-----
+Last Modified: 2022-01-21 14:50:43
+Modified By: IchinoseHimeki (darwinlee19980811@hotmail.com>)
+-----
+Copyright 2022
+Requisite: Python 3.10+
+Description: A Script to Extract data download from https://data.cma.cn to SWAT weather generator input csvs.
+A further database generator for SWAT is https://www.researchgate.net/publication/294535100_SWAT_Weather_Database, where these csvs could be able to use. Again, thanks for his efforts.
+If using SWAT+, SWAT+ do convert SWAT weather data into SWAT+ format. Cheers!
+Data URL is http://data.cma.cn/data/cdcdetail/dataCode/SURF_CLI_CHN_MUL_DAY.html.
+Normally it includes serveral essentinal parameters, average windspeed, average relative humidity, sunshine hours, 24hrs precipitation, maximum temperature and minimum temperature. And it could print specific csvs.
+'''
+
 import csv
 import os
 import shutil

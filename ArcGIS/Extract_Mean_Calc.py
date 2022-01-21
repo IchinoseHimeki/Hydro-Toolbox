@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
 '''
-@Author: Darwin Lee (darwinlee19980811@hotmail.com) 
-@Date: 2021-08-06 14:06:52 
-@Last Modified by:   Darwin Lee (darwinlee19980811@hotmail.com) 
-@Last Modified time: 2021-09-07 19:47:00
-
-Please be advised that ArcGIS is required! 
-This Program could convert txt(asc based) into tif, then extract it by mask, calcualting the mean of the clipped raster. Also, it could extract values into given points.
+File: Extract_Mean_Calc.py
+File Created: 2021-08-06 14:06:52
+Author: IchinoseHimeki (darwinlee19980811@hotmail.com)
+-----
+Last Modified: 2022-01-21 14:12:14
+Modified By: IchinoseHimeki (darwinlee19980811@hotmail.com>)
+-----
+Copyright 2022
+Requisite: ArcGIS 10.2+ with ArcPy
+Description: This Program could convert txt(asc based) into tif, then extract it by mask, calcualting the mean of the clipped raster. Also, it could extract values into given points.
 It Requires Data(.txt), Extract_Mask(Area needs to be extract), Extract_Points(Points needs to be extract).
 '''
+
 import arcpy
 from arcpy.sa import *
 import csv

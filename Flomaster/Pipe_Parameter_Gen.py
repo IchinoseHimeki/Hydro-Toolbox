@@ -1,3 +1,16 @@
+'''
+File: Pipe_Parameter_Gen.py
+File Created: 2021-11-21 00:38:32
+Author: IchinoseHimeki (darwinlee19980811@hotmail.com)
+-----
+Last Modified: 2022-01-21 14:27:42
+Modified By: IchinoseHimeki (darwinlee19980811@hotmail.com>)
+-----
+Copyright 2022
+Requisite: Siemens Flomaster
+Description: Batch modify simualation data for batch simulating.
+'''
+
 import os
 
 globalPath=os.getcwd()

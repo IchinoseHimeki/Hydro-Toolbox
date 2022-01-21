@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 '''
-@Author: Darwin Lee (darwinlee19980811@hotmail.com) 
-@Date: 2021-08-06 14:08:44 
-@Last Modified by:   Darwin Lee (darwinlee19980811@hotmail.com) 
-@Last Modified time: 2021-08-06 14:08:44
-
-Please be advised that matplotlib is REQUIRED！
-This is barely support program， considering to be done.
+File: Pipe_Pressure.py
+File Created: 2021-08-06 14:08:44 
+Author: IchinoseHimeki (darwinlee19980811@hotmail.com)
+-----
+Last Modified: 2022-01-21 15:02:46
+Modified By: IchinoseHimeki (darwinlee19980811@hotmail.com>)
+-----
+Copyright 2022
+Requisite: Matplotlib
+Description: This is barely support program， considering to be done.
 '''
 
-matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 import os
 from math import sqrt
 import numpy as np

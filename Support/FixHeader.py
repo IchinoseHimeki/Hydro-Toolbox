@@ -1,12 +1,17 @@
 # -*- coding: utf-8 -*-
-"""
-@Author: Darwin Lee (darwinlee19980811@hotmail.com) 
-@Date: 2021-09-10 11:20:12 
-@Last Modified by:   Darwin Lee (darwinlee19980811@hotmail.com) 
-@Last Modified time: 2021-09-10 11:20:12 
+'''
+File: FixHeader.py
+File Created: 2021-09-10 11:20:12 
+Author: IchinoseHimeki (darwinlee19980811@hotmail.com)
+-----
+Last Modified: 2022-01-21 14:52:31
+Modified By: IchinoseHimeki (darwinlee19980811@hotmail.com>)
+-----
+Copyright 2022
+Requisite: Python 3.10+
+Description: Fix missing header of specific .asc/.txt file, which could be recongized as TIF.
+'''
 
-Fix missing header of specific .asc/.txt file, which could be recongized as TIF.
-"""
 import os
 import shutil
 from multiprocessing import Pool,cpu_count

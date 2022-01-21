@@ -1,11 +1,19 @@
 # -*- coding=utf-8 -*-
 '''
-Please be advised that ArcPy is REQUIRED!
-7zip is Required! Download it here: https://www.7-zip.org
+File: ESA_Calculation.py
+File Created: 2021-04-08 14:24:32
+Author: IchinoseHimeki (darwinlee19980811@hotmail.com)
+-----
+Last Modified: 2022-01-21 14:06:09
+Modified By: IchinoseHimeki (darwinlee19980811@hotmail.com>)
+-----
+Copyright 2022
+Requisite: ArcGIS 10.2+ with ArcPy, 7zip
+Description: Inspired by https://blog.csdn.net/liyanzhong/article/details/52557425
+Due to 7-zip and cmd, the path should NEVER have any blanks!
 Contains the post processes of ESA's data, especially the GlobalSnow SWE products.
 '''
-# Inspired by https://blog.csdn.net/liyanzhong/article/details/52557425 
-# Due to 7-zip and cmd, the path should NEVER have any blanks!
+
 import os
 import shutil
 from multiprocessing import Pool, Value

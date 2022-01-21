@@ -1,11 +1,22 @@
 # -*- coding=utf-8 -*-
+'''
+File: Met_Extraction.py
+File Created: 2021-05-11 21:14:33
+Author: IchinoseHimeki (darwinlee19980811@hotmail.com)
+-----
+Last Modified: 2022-01-21 15:20:41
+Modified By: IchinoseHimeki (darwinlee19980811@hotmail.com>)
+-----
+Copyright 2022
+Requisite: Python 3.10+
+Description: This script is convert files from http://stdown.agrivy.com/, which is in a .met format. From
+'''
+
 import os
 import sys
 import csv
 import re
-'''
-This script is convert files from http://stdown.agrivy.com/, which is in a .met format. From
-'''
+
 # Dir Structure
 Dir45 = 'E:/Project/CMIP5/FILE/45/'
 Out45 = 'E:/Project/CMIP5/FILE/45CSV/'

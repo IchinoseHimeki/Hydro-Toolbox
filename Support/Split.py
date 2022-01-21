@@ -1,3 +1,16 @@
+'''
+File: Split.py
+File Created: 2020-04-26 14:03:33
+Author: NULL233
+-----
+Last Modified: 2020-04-26 15:12:19
+Modified By: NULL233
+-----
+Copyright 2022
+Requisite: Pandas
+Description: 
+'''
+
 import pandas as pd
 
 data = pd.read_csv('./Split.csv')

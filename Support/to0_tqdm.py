@@ -1,8 +1,19 @@
-# Becoming a 0 is never so easy than before, yeah
-# Just joking, you cannot make rain back to the sky and evaporation back to the earth
-# This is going to correct negative values which are interpolation by kriging method to 0
-# Considering merging this to bullshitconverter.py
-# importing tqdm to make this process not so misery, probably
+'''
+File: to0.py
+File Created: 2021-05-30 17:42:33
+Author: IchinoseHimeki (darwinlee19980811@hotmail.com)
+-----
+Last Modified: 2022-01-21 15:10:55
+Modified By: IchinoseHimeki (darwinlee19980811@hotmail.com>)
+-----
+Copyright 2022
+Requisite: tqdm
+Description: 
+Becoming a 0 is never so easy than before, yeah
+Just joking, you cannot make rain back to the sky and evaporation back to the earth
+This is going to correct negative values which are interpolation by kriging method to 0
+Considering merging this to bullshitconverter.py
+'''
 import os
 from tqdm import tqdm
 

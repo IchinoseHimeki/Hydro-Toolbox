@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
 '''
-Author: Darwin Lee (darwinlee19980811@hotmail.com) 
-Date: 2021-08-06 14:48:10 
-Last Modified by: Darwin Lee (darwinlee19980811@hotmail.com)
-Last Modified time: 2021-08-06 14:50:49
-
-Please be advised that Matplotlib is REQUIRED!
-This scipt will scan a few points, spilt and input measured pipe pressure data, joining data as specific, then plot them into one png.
+File: Pipe_Leak.py
+File Created: 2021-08-06 14:48:10
+Author: IchinoseHimeki (darwinlee19980811@hotmail.com)
+-----
+Last Modified: 2022-01-21 15:00:55
+Modified By: IchinoseHimeki (darwinlee19980811@hotmail.com>)
+-----
+Copyright 2022
+Requisite: Mataplotlib
+Description: This scipt will scan a few points, spilt and input measured pipe pressure data, joining data as specific, then plot them into one png.
 It requires Pre/Pos.csv(Pipe pressure meter and locations), Data.csv(Measured data in day format) and Control.csv(Determine which point should be used to draw lines.)
 '''
+
 import csv
 import os
 import matplotlib.pyplot as plt

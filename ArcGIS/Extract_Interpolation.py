@@ -1,9 +1,18 @@
 # -*- coding=utf-8 -*-
 '''
-Please be advised that ArcPy is REQUIRED!
-This script will extract values from a low-resolution raster to the specific points, then use those points to interpolate into a higer resolution raster.
+File: Extract_Interpolation.py
+File Created: 2021-04-08 14:24:32
+Author: IchinoseHimeki (darwinlee19980811@hotmail.com)
+-----
+Last Modified: 2022-01-21 14:08:01
+Modified By: IchinoseHimeki (darwinlee19980811@hotmail.com>)
+-----
+Copyright 2022
+Requisite: ArcGIS 10.2+ with ArcPy
+Description: Extract values from a low-resolution raster to the specific points, then use those points to interpolate into a higer resolution raster.
+ATTENTION! The Rasters in Data Dir should be larger than Base.shp, or the -9999 Value will be OCCUR!
 '''
-# ATTENTION! The Rasters in Data Dir should be larger than Base.shp, or the -9999 Value will be OCCUR!
+
 import os
 import shutil
 from multiprocessing import Pool

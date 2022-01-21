@@ -1,7 +1,16 @@
 # coding=utf-8
-# Calculate the Mean of the raster
-# Please be advised that ArcGIS is REQUIRED
-# With Extraction from Specific shape
+'''
+File: Raster_Mean_Calculation_with_Extraction.py
+File Created: 2022-01-21 14:03:32
+Author: IchinoseHimeki (darwinlee19980811@hotmail.com)
+-----
+Last Modified: 2022-01-21 14:17:14
+Modified By: IchinoseHimeki (darwinlee19980811@hotmail.com>)
+-----
+Copyright 2022
+Requisite: ArcGIS 10.2+ with ArcPy
+Description: Calculate the Mean of the raster, with Extraction from Specific shape.
+'''
 
 import arcpy
 from arcpy.sa import *

@@ -1,6 +1,16 @@
 '''
-Split accmulated PRE into pre period PRE.
+File: PRE_Extract.py
+File Created: 2021-11-27 00:38:33
+Author: IchinoseHimeki (darwinlee19980811@hotmail.com)
+-----
+Last Modified: 2022-01-21 15:04:11
+Modified By: IchinoseHimeki (darwinlee19980811@hotmail.com>)
+-----
+Copyright 2022
+Requisite: Python 3.10+
+Description: Split accmulated PRE into pre period PRE.
 '''
+
 import os
 import csv
 import datetime

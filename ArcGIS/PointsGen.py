@@ -1,9 +1,18 @@
 # -*- coding=utf-8 -*-
 '''
-Please be advised that ArcPy is REQUIRED!
-Assist generating points for Extract_Interpolation.py, or it could be separately used while generating some points.
-By default, it shares the same dir structure.
+File: PointsGen.py
+File Created: 2021-04-08 14:24:32
+Author: IchinoseHimeki (darwinlee19980811@hotmail.com)
+-----
+Last Modified: 2022-01-21 14:13:12
+Modified By: IchinoseHimeki (darwinlee19980811@hotmail.com>)
+-----
+Copyright 2022
+Requisite: ArcGIS 10.2+ with Arcpy
+Description: Assist generating points for Extract_Interpolation.py, or it could be separately used while generating some points.
+By default, it shares the same dir structure
 '''
+
 import csv
 import os
 import arcpy

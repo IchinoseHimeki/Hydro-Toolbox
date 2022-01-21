@@ -1,3 +1,19 @@
+'''
+File: Raster_Calculator.py
+File Created: 2020-10-30 11:03:32
+Author: IchinoseHimeki (darwinlee19980811@hotmail.com)
+-----
+Last Modified: 2022-01-21 14:14:39
+Modified By: IchinoseHimeki (darwinlee19980811@hotmail.com>)
+-----
+Copyright 2022
+Requisite: ArcGIS 10.2+ with ArcPy
+Description: Weight Calculation is not guaranteed!
+Calculate the weight value of each phrase, then do expressions below:
+ResultRaster=Raster1*weight1+Raster2*weight2+Raster3*weight3+Raster4*weight4+Raster5*weight5+Raster6*weight6
+
+Expression Constructing seems to be very stupid, hope there will be a better way to improve
+'''
 import arcpy
 import arcpy.sa
 from arcpy.sa import *
@@ -6,16 +22,6 @@ from arcpy import env
 import os
 from multiprocessing import Pool
 from multiprocessing import cpu_count
-'''
-Raster Calculator in ArcGIS
-Please be advised that ArcPY does be REQUIRED
-Weight Calculation is not guaranteed!
-Calculate the weight value of each phrase, then do expressions below:
-ResultRaster=Raster1*weight1+Raster2*weight2+Raster3*weight3+Raster4*weight4+Raster5*weight5+Raster6*weight6
-From now on, use pool instead of processList.
-
-Expression Constructing seems to be very stupid, hope there will be a better way to improve
-'''
 
 # Set environment settings
 # Import Path by os.getcwd

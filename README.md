@@ -1,9 +1,9 @@
 # Hydro-Toolbox
 
-[^_^]: # (For the girl who I missed and still miss now.)
-[^_^]: # (Glad to see everything get well on you. Please carry it on, and be yourself.)
-[^_^]: # (Sticking to the dream is a privilege, so jealious that you have that.)
-[^_^]: # (Sadly but luckily end it before the gaps get beyond accross.)
+[^_^]: # (For the girl who I miss.)
+[^_^]: # (The wheel of time starts moving again. Nothing is predictable.)
+[^_^]: # (The past has taught me lessons. Hope it will never happen again.)
+[^_^]: # (Whatever the ending is, this memory deserved to be cherished.)
 [^_^]: # (All best wishes to you, HZC.)
 
 Scripts and other Things for simplify graduation work, python takes the most part.  
@@ -52,6 +52,7 @@ R 4.1.0(64 bit)
 [`Pipe_Parameter_Gen.py`](Flomaster/Pipe_Parameter_Gen.py)(根据Flomaster生成的参数文件来批量生成参数文件).   
 [`Extract_Pipe_Xlsx.py`](Flomaster/Extract_Pipe_Xlsx.py)(提取FloMaster生成的xlsx文件使用的程序).  
 [`PRE_Extract.py`](Support/PRE_Extract.py)(将指定仪器自记录的累计降雨尽可能拆分成指定时长内的降雨).  
+[`R2NSE.py`](Support/R2NSE.py)(批量处理SWAT-CUP生成的模拟数据与已有数据计算$R^2$(可决系数)和$NSE$(纳什效率系数)).  
 ## 文件格式说明
 [ArcGIS](ArcGIS/)文件夹为需要[Esri ArcGIS arcpy](https://www.esri.com/arcgis-blog/products/arcgis-desktop/uncategorized/whats-new-in-arcmap-10-6/)作为前置.  
 [Support](Support/)文件夹为支持类型的文件,具体需求会写在注释中.  
