@@ -53,6 +53,9 @@ R 4.1.0(64 bit)
 [`Extract_Pipe_Xlsx.py`](Flomaster/Extract_Pipe_Xlsx.py)(提取FloMaster生成的xlsx文件使用的程序).  
 [`PRE_Extract.py`](Support/PRE_Extract.py)(将指定仪器自记录的累计降雨尽可能拆分成指定时长内的降雨).  
 [`R2NSE.py`](Support/R2NSE.py)(批量处理SWAT-CUP生成的模拟数据与已有数据计算$R^2$(可决系数)和$NSE$(纳什效率系数)).  
+[`Snow_Add.py`](ArcGIS/Snow_Add.py)(将两个卫星针对同一区域遥感数据进行叠加，并计算其月平均值输出为栅格).  
+[`Snow_Depth_Resample.py`](ArcGIS/Snow_Depth_Resample.py)(定义投影，转换投影，使用立方重采样后计算月平均值栅格).  
+
 ## 文件格式说明
 [ArcGIS](ArcGIS/)文件夹为需要[Esri ArcGIS arcpy](https://www.esri.com/arcgis-blog/products/arcgis-desktop/uncategorized/whats-new-in-arcmap-10-6/)作为前置.  
 [Support](Support/)文件夹为支持类型的文件,具体需求会写在注释中.  
