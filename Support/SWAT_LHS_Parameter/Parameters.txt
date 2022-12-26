@@ -1,6 +1,8 @@
 ===PARAMETERS FILE HEADER===
 --RATIO OF SAMPLE AGAINST PARAMETERS-- # 10
-1
+200
+--TARGET NSE-- # Instance Below this value will be erased. NSE=65535.0: Keep All, NSE = 9999.0: Erase All
+0.8
 --BSN-- # 2
 37
 --HRU LIST-- #20 30
@@ -8,25 +10,23 @@
 --RCH-- # 10 20 
 
 --CALIBRATE STRUCTURE WITH ORDER-- # 1 2 3 4 5 //  6 7 8 9 10 
-2 3 4
-1 6 5 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 24 25 28 23 26 27 29 30 31 32 33 34 35 36 37 
 --ACTIVE CALIBRATION ORDER-- # 1
 1
 --SUB PARAMETERS--
-CH_K2|rte|6.4695|129.9373|v|g
-ALPHA_BNK|rte|0.10396|0.99838|v|s
+CH_N2|rte|0.01|0.275|v|g
+SNO_SUB|sub|7.465|143.78|v|g
 --HRU PARAMETERS--
-CN2|mgt|-0.119|0.198|r|g
-ALPHA_BF|gw|0|0.9868|v|s
-GW_REVAP|gw|0|0.19968|v|h
-ESCO|hru|0.01|0.996|v|g
-RCHRG_DP|gw|0|0.9925|v|g
-SLSUBBSN|hru|10.42|149.75|v|g
-GW_DELAY|gw|33.191|448.99|v|g
+ALPHA_BF|gw|0.23|0.936|v|g
+ESCO|hru|0.05|0.684|v|g
+RCHRG_DP|gw|0.0125|0.719|v|g
+GW_DELAY|gw|39|385|v|g
+GW_REVAP|gw|0.0186|0.191|v|g
+GWQMN|gw|375.9|2681|v|g
 --SOIL PARAMETERS--
-Bulk Density Moist|sol|-0.49534|0.496|r
-Ave. AW Incl. Rock Frag|sol|-0.4982|0.49229|r
-Ksat. (est.)|sol|-0.49838|0.4916|r
+Ave. AW Incl. Rock Frag|sol|-0.548|0.56|r
+Ksat. (est.)|sol|-0.488|0.311|r
+Bulk Density Moist|sol|-0.52|0.4766|r
 --SOIL CSV FILE--
 soil.csv
 --WARMUP MONTH-- # 60
@@ -34,4 +34,4 @@ soil.csv
 --OBSERVED FILE-- # 1 Flow1.txt
 1|2006-2010.txt
 --SIMULATION DATA TO EXTRACT WITH ID-- # 1 RCH 1 //RCH 30
-1|RCH|5
+1|RCH|7

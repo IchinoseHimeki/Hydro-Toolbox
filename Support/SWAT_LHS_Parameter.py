@@ -4,16 +4,15 @@ File: SWAT_LHS_parameter.py
 File Created: 2022-05-01 13:48:33
 Author: IchinoseHimeki (darwinlee19980811@hotmail.com)
 -----
-Last Modified: 2022-07-27 16:53:24
+Last Modified: 2022-12-19 22:37:24
 Modified By: IchinoseHimeki (darwinlee19980811@hotmail.com)
 -----
 Copyright 2022
 Requisite: Python 3.10+, pyDOE2, numpy
-Description: A programs which calinbrate SWAT 2012 rev. 682 in a far more stupid way than SWAT-CUP by using LHS method. Details are on https://naive514.top/371 (only in Chinese, if want to hear further bullshit, just contact my email on github.)
+Description: A programs which calinbrate SWAT 2012 rev. 682 in a far more stupid way than SWAT-CUP by using LHS method. Details are on https://naive514.top/blablabla (only in Chinese, if want to hear further bullshit, just contact my email on github.)
 '''
 from multiprocessing import cpu_count
 from multiprocessing.pool import Pool
-from posixpath import join
 import shutil
 import pyDOE2
 import csv
@@ -22,12 +21,14 @@ import datetime
 import numpy as np
 from math import sqrt
 from math import pow
+import pandas as pd
 
 globalPath=os.getcwd()
 ratio=0
 basinCount=0
 hruCount=0
 warmup=0
+targetNSE=0.0
 hruList=[]
 basinParameters=[]
 subbasinParameters=[]
@@ -41,11 +42,11 @@ observedData=[]
 sample=[]
 soilType=[]
 soilParameters=[]
-singleTest=False
+
 
 class ProcessSWAT(object):
     'SWAT Parameter, including parameter name, value and file.'
-    def __init__(self,instanceID,paraList,observedData,bsnList,hruList,bsnParameter,hruParameter,subbsnParameter,warmup,extractList,soilType,soilParameter):
+    def __init__(self,instanceID,paraList,observedData,bsnList,hruList,bsnParameter,hruParameter,subbsnParameter,warmup,extractList,soilType,soilParameter,targetNSE):
         self.__id=instanceID
         self.__paraList=paraList
         self.__observedData=observedData
@@ -62,11 +63,21 @@ class ProcessSWAT(object):
         self.__simulatedData=[]
         self.r2=0.0
         self.nse=1.0
+        self.__simulatedFaults=[]
+        self.__absSimulatedFaults=[]
+        self.avgFaults=0.0
+        self.varFaults=0.0
+        self.absAvgFaults=0.0
+        self.absVarFaults=0.0
+        self.maeFaults=0.0
+        self.mseFaults=0.0
+        self.rmseFaults=0.0
         self.__hruH=0
         self.__hruS=0
         self.__hruG=0
         self.__subS=0
         self.__subG=0
+        self.__targetNSE=targetNSE
         
         for i in self.__hruParameter:
             if i[5]=="h":
@@ -227,7 +238,7 @@ class ProcessSWAT(object):
         for i in rawResults:
             splitedList.append(i[:64].strip().split())
         for i in splitedList:
-            if i[1]==str(self.__extractList[2]) and len(i[3])<=2:
+            if i[1]==str(self.__extractList[2]) and len(i[3])<=3 and not "." in i[3]:
                 self.__simulatedData.append(float(i[6]))
         pass
     pass                
@@ -240,6 +251,12 @@ class ProcessSWAT(object):
         sum3=0.0
         sum4=0.0
         sum5=0.0
+        sumVar=0.0
+        sumAbsVar=0.0
+        sumFaults=0.0
+        sumAbsFaults=0.0
+        summaeFaults=0.0
+        summseFaults=0.0
         averageObserve=0.0
         averageSim=0.0
         simulatedData=self.__simulatedData[int(self.__warmup):]
@@ -258,16 +275,42 @@ class ProcessSWAT(object):
                 sum3+=pow((float(simulatedData[i])-float(averageSim)),2.0)
                 sum4+=pow(float(self.__observedData[i])-float(simulatedData[i]),2.0)
                 sum5+=pow(float(self.__observedData[i])-float(averageObserve),2.0)
+                summaeFaults+=abs(float(self.__observedData[i])-float(simulatedData[i]))
+                summseFaults+=pow(abs(float(self.__observedData[i])-float(simulatedData[i])),2.0)
+                self.__simulatedFaults.append((float(simulatedData[i])-float(self.__observedData[i]))/float(self.__observedData[i]))
+                self.__absSimulatedFaults.append(abs((float(simulatedData[i])-float(self.__observedData[i]))/float(self.__observedData[i])))
         self.r2=pow(sum1/(sqrt(sum2)*sqrt(sum3)),2.0)
         self.nse=1.0-(sum4/sum5)
+        for i in self.__simulatedFaults:
+            sumFaults+=i
+        for i in self.__absSimulatedFaults:
+            sumAbsFaults+=i
+        self.avgFaults=sumFaults/len(self.__simulatedFaults)
+        self.absAvgFaults=sumAbsFaults/len(self.__absSimulatedFaults)
+        for i in self.__simulatedFaults:
+            sumVar+=pow((i-self.avgFaults),2.0)
+        for i in self.__absSimulatedFaults:
+            sumAbsVar+=pow((i-self.absAvgFaults),2.0)
+        self.varFaults=sumVar/len(self.__simulatedFaults)
+        self.absVarFaults=sumAbsVar/len(self.__absSimulatedFaults)
+        self.maeFaults=summaeFaults/len(self.__simulatedFaults)
+        self.mseFaults=summseFaults/len(self.__simulatedFaults)
+        self.rmseFaults=sqrt(self.mseFaults)
         
     def run(self):
         'Perform the whole process & Return results.'
         output=[]
+        simResults=[]
         self.__modifyParameters()
         self.__executeModel()
         self.__calcStatus()
-        shutil.rmtree(self.__workingDir) # comment this to debug
+        if self.__targetNSE == 9999.0:
+            shutil.rmtree(self.__workingDir)
+        elif self.nse <= self.__targetNSE:
+            shutil.rmtree(self.__workingDir)
+        elif self.__targetNSE == 65535.0:
+            pass
+        output.append(self.__id)
         for i in self.__paraList:
             for j in i:
                 if isinstance(j,list):
@@ -277,11 +320,25 @@ class ProcessSWAT(object):
                     output.append(j)
         output.append(self.r2)
         output.append(self.nse)
+        output.append(self.avgFaults)
+        output.append(self.varFaults)
+        output.append(self.absAvgFaults)
+        output.append(self.absVarFaults)
+        output.append(self.maeFaults)
+        output.append(self.mseFaults)
+        output.append(self.rmseFaults)
+        simResults.append(["ID",self.__id,"Abs"])
+        simResults.append(["Sim","Relative Faults","Abs Relative Faults"])
+        for i in range(len(self.__simulatedData)):
+            simResults.append([self.__simulatedData[i],self.__simulatedFaults[i],self.__absSimulatedFaults[i]])
+        with open (globalPath+"//ResCSV//Res"+str(self.__id)+".csv","a",newline="") as f:
+            resWriter=csv.writer(f)
+            resWriter.writerows(simResults)
         return(output)
 
 def check(): # The longest check() ever. Initializing the config file.
-    do_testRun=False
-    global ratio,basinCount,hruList,hruCount,basinParameters,subbasinParameters,hruParameters,observedFile,extractionType,calibrationOrder,activeCalibration,activeHrulist,warmup,observedData,soilType
+    do_testRun=True
+    global ratio,basinCount,hruList,hruCount,basinParameters,subbasinParameters,hruParameters,observedFile,extractionType,calibrationOrder,activeCalibration,activeHrulist,warmup,observedData,soilType,targetNSE
     tmp_basinParameters=[]
     tmp_subbasinParameters=[]
     tmp_hruParameters=[]
@@ -301,6 +358,11 @@ def check(): # The longest check() ever. Initializing the config file.
     else:
         shutil.rmtree(globalPath+"//Instance")
         os.mkdir(globalPath+"//Instance")
+    if not os.path.exists(globalPath+"//ResCSV//"):
+        os.mkdir(globalPath+"//ResCSV//")
+    else:
+        shutil.rmtree(globalPath+"//ResCSV//")
+        os.mkdir(globalPath+"//ResCSV//")
     if not os.path.exists(globalPath+"//Parameters.txt"):
         raise(IOError("Model parameters file not found!"))
     with open(globalPath+"//Parameters.txt","r") as f: # Reading config file, there should be a better way to achieve this TODO: daily data
@@ -310,6 +372,10 @@ def check(): # The longest check() ever. Initializing the config file.
                 ratio=int(parameters[i+1].rstrip(" ").lstrip(" "))
                 if ratio <= 0:
                     raise(Exception("Ratio shall never be negative or zero!"))
+            if "--TARGET NSE--" in parameters[i]:
+                targetNSE=float(parameters[i+1].strip(" "))
+                if (not targetNSE == 9999.0 and not targetNSE ==65535.0) and targetNSE>1.0:
+                    raise(Exception("NSE should be smaller than 1.0, except for 65535.0 (KeepAll) or 9999.0 (Erase All)!"))
             if "--BSN--" in parameters[i]:
                 basinCount=int(parameters[i+1].rstrip(" ").lstrip(" "))
                 if basinCount <= 0:
@@ -544,8 +610,10 @@ def sampleGeneration(): # Generating Samples
         for i in soilParameters:
             tmp_soilBound.append([abs(i[2]-i[1]),i[1]])
         soilBound.append(tmp_soilBound)        
-    bsnLHS=pyDOE2.lhs(len(basinParameters),int(ratio)*activeHRU).tolist()
-    soilLHS=pyDOE2.lhs(len(soilParameters)*len(soilType),int(ratio)*activeHRU).reshape((int(ratio)*activeHRU,len(soilType),len(soilParameters))).tolist()
+    # bsnLHS=pyDOE2.lhs(len(basinParameters),int(ratio)*activeHRU).tolist()
+    # soilLHS=pyDOE2.lhs(len(soilParameters)*len(soilType),int(ratio)*activeHRU).reshape((int(ratio)*activeHRU,len(soilType),len(soilParameters))).tolist()   
+    bsnLHS=pyDOE2.lhs(len(basinParameters),int(ratio)).tolist()
+    soilLHS=pyDOE2.lhs(len(soilParameters)*len(soilType),int(ratio)).reshape((int(ratio),len(soilType),len(soilParameters))).tolist()
     for i in hruParameters:
         if i[5] == "h":
             scaleHRU+=1
@@ -554,9 +622,12 @@ def sampleGeneration(): # Generating Samples
         elif i[5] == "g":
             scaleGbl+=1
 
-    hruLHSH=pyDOE2.lhs(scaleHRU*activeHRU,int(ratio)*activeHRU).tolist()
-    hruLHSS=pyDOE2.lhs(scaleSub*len(tmp_list[0]),int(ratio)*activeHRU).tolist()
-    hruLHSG=pyDOE2.lhs(scaleGbl,int(ratio)*activeHRU).tolist()
+    # hruLHSH=pyDOE2.lhs(scaleHRU*activeHRU,int(ratio)*activeHRU).tolist()
+    # hruLHSS=pyDOE2.lhs(scaleSub*len(tmp_list[0]),int(ratio)*activeHRU).tolist()
+    # hruLHSG=pyDOE2.lhs(scaleGbl,int(ratio)*activeHRU).tolist()
+    hruLHSH=pyDOE2.lhs(scaleHRU*activeHRU,int(ratio)).tolist()
+    hruLHSS=pyDOE2.lhs(scaleSub*len(tmp_list[0]),int(ratio)).tolist()
+    hruLHSG=pyDOE2.lhs(scaleGbl,int(ratio)).tolist()
     for i in range(len(hruLHSH)):
         tmp_HRU=[]
         for j in range(len(hruLHSH[i])):
@@ -580,8 +651,10 @@ def sampleGeneration(): # Generating Samples
             scaleSub+=1
         elif i[5] == "g":
             scaleGbl+=1
-    subLHSS=pyDOE2.lhs(scaleSub*len(tmp_list[0]),int(ratio)*activeHRU).tolist()
-    subLHSG=pyDOE2.lhs(scaleGbl,int(ratio)*activeHRU).tolist() 
+    # subLHSS=pyDOE2.lhs(scaleSub*len(tmp_list[0]),int(ratio)*activeHRU).tolist()
+    # subLHSG=pyDOE2.lhs(scaleGbl,int(ratio)*activeHRU).tolist() 
+    subLHSS=pyDOE2.lhs(scaleSub*len(tmp_list[0]),int(ratio)).tolist()
+    subLHSG=pyDOE2.lhs(scaleGbl,int(ratio)).tolist() 
     for i in range(len(subLHSS)):
         tmp_sub=[]
         for j in range(len(subLHSS[i])):
@@ -606,13 +679,15 @@ def sampleGeneration(): # Generating Samples
                 tempSoilj.append(soilLHS[i][j][k]*soilBound[j][k][0]+soilBound[j][k][1])
             tempSoil.append(tempSoilj)
         soilSample.append(tempSoil)
-    for i in range(ratio*activeHRU):
+    # for i in range(ratio*activeHRU):
+    for i in range(ratio):
         sample.append([bsnSample[i],[HRUSampleH[i],HRUSampleS[i],HRUSampleG[i]],[subSampleS[i],subSampleG[i]],soilSample[i]])
-    print("There are currently %d HRUs, %d Subbasins and %d Soil Types pending to calibrate.\n Generated %d Samples, with %d parameters are changed per Sample: %d (global) %d (subbasin) Subbasin Parameters, %d (global) %d (Subbasin) %d (HRU) HRU Parameters, %d Basin Parameters and %d Soil Parameters.\n" %(activeHRU,len(activeHrulist[0]),len(soilType),ratio*activeHRU,(len(subSampleG[0])+len(subSampleS[0])+len(HRUSampleG[0])+len(HRUSampleS[0])+len(HRUSampleH[0])+len(bsnSample[0])+(len(soilSample[0])*len(soilParameters))),len(subSampleG[0]),len(subSampleS[0])/len(activeHrulist[0]), len(HRUSampleG[0]),len(HRUSampleS[0])/len(activeHrulist[0]),len(HRUSampleH[0])/activeHRU,len(bsnSample[0]),len(soilSample[0][0])))
+    # print("There are currently %d HRUs, %d Subbasins and %d Soil Types pending to calibrate.\n Generated %d Samples, with %d parameters are changed per Sample: %d (global) %d (subbasin) Subbasin Parameters, %d (global) %d (Subbasin) %d (HRU) HRU Parameters, %d Basin Parameters and %d Soil Parameters.\n" %(activeHRU,len(activeHrulist[0]),len(soilType),ratio*activeHRU,(len(subSampleG[0])+len(subSampleS[0])+len(HRUSampleG[0])+len(HRUSampleS[0])+len(HRUSampleH[0])+len(bsnSample[0])+(len(soilSample[0])*len(soilParameters))),len(subSampleG[0]),len(subSampleS[0])/len(activeHrulist[0]), len(HRUSampleG[0]),len(HRUSampleS[0])/len(activeHrulist[0]),len(HRUSampleH[0])/activeHRU,len(bsnSample[0]),len(soilSample[0][0])))
+    print("There are currently %d HRUs, %d Subbasins and %d Soil Types pending to calibrate.\n Generated %d Samples, with %d parameters are changed per Sample: %d (global) %d (subbasin) Subbasin Parameters, %d (global) %d (Subbasin) %d (HRU) HRU Parameters, %d Basin Parameters and %d Soil Parameters.\n" %(activeHRU,len(activeHrulist[0]),len(soilType),ratio,(len(subSampleG[0])+len(subSampleS[0])+len(HRUSampleG[0])+len(HRUSampleS[0])+len(HRUSampleH[0])+len(bsnSample[0])+(len(soilSample[0])*len(soilParameters))),len(subSampleG[0]),len(subSampleS[0])/len(activeHrulist[0]), len(HRUSampleG[0]),len(HRUSampleS[0])/len(activeHrulist[0]),len(HRUSampleH[0])/activeHRU,len(bsnSample[0]),len(soilSample[0][0])))
     pass
 
 def runModel(instance): # Provide a method to building instances
-    locals()["instance_"+str(instance)]=ProcessSWAT(instance[0],instance[1],instance[2],instance[3],instance[4],instance[5],instance[6],instance[7],instance[8],instance[9],instance[10],instance[11])
+    locals()["instance_"+str(instance)]=ProcessSWAT(instance[0],instance[1],instance[2],instance[3],instance[4],instance[5],instance[6],instance[7],instance[8],instance[9],instance[10],instance[11],instance[12])
     res=locals()["instance_"+str(instance)].run()
     return res
 
@@ -621,6 +696,7 @@ def printRes(results): # Write results into results.csv
         write=csv.writer(f)
         head=[]
         activeHru=0
+        head.append("ID")
         for i in activeHrulist[0]:
             activeHru+=i
         for i in basinParameters:
@@ -648,22 +724,37 @@ def printRes(results): # Write results into results.csv
                 head.append("SOL_"+i+str(j[0]))
         head.append("R2")
         head.append("NSE")
+        head.append("AvgRF")
+        head.append("VarRF")        
+        head.append("AvgAbsRF")
+        head.append("VarAbsRF")
+        head.append("MAE")
+        head.append("MSE")
+        head.append("RMSE")
         write.writerow(head)
-        if singleTest:
-            write.writerows([results])
-        else:
-            write.writerows(results)
-        
+        write.writerows(results)
+
+def joinCSV():
+    csvList=os.listdir(globalPath+"//ResCSV//")
+    outputpd=pd.DataFrame()
+    outputpd2=pd.DataFrame()
+    for i in csvList:
+        locals()["merge_"+str(i)]=pd.read_csv(globalPath+"//ResCSV//"+i)
+        outputpd=pd.concat([outputpd,locals()["merge_"+str(i)]],axis=1)
+        outputpd2=pd.concat([outputpd2,locals()["merge_"+str(i)]["ID"]],axis=1)
+        #pd.merge(outputpd,locals()["merge_"+str(i)],how="inner",on=None)
+    outputpd.to_csv(globalPath+"//MergedCSV.csv")
+    outputpd2.to_csv(globalPath+"//MergedCSV_DataOnly.csv")
+
 if __name__=="__main__":
     check()
     sampleGeneration()
     poolList=[]
     pool0=Pool(int(cpu_count()/4))
-    for i in range(1):
-        poolList.append([i,sample[i],observedData[0],calibrationOrder[activeCalibration[0]-1],activeHrulist[0],basinParameters,hruParameters,subbasinParameters,warmup,extractionType[0],soilType,soilParameters]) # Avoid using global varibles while applying multiprocessing.
-    if singleTest:
-        printRes(runModel(poolList[0]))
-    else:
-        results=pool0.map_async(runModel,poolList).get() 
-        printRes(results)
+    for i in range(len(sample)):
+        poolList.append([i,sample[i],observedData[0],calibrationOrder[activeCalibration[0]-1],activeHrulist[0],basinParameters,hruParameters,subbasinParameters,warmup,extractionType[0],soilType,soilParameters,targetNSE]) # Avoid using global varibles while applying multiprocessing.
+    #printRes(runModel(poolList[0]))
+    results=pool0.map_async(runModel,poolList).get() 
+    printRes(results)
+    joinCSV()
     pass
